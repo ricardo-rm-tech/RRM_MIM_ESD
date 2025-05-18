@@ -1,4 +1,5 @@
-/* client.c */
+//Author Marcos Indiano & Ricardo Ruiz
+//made with AI and refined by us
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
