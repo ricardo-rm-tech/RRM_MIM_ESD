@@ -1,3 +1,4 @@
+author: Marcos Indiano y Ricardo Ruiz
 /* client.c */
 #include <stdio.h>
 #include <stdlib.h>
