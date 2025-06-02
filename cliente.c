@@ -1,5 +1,4 @@
-//Author Marcos Indiano & Ricardo Ruiz
-//made with AI and refined by us
+/* client.c */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -10,6 +9,7 @@
 #include <linux/i2c-dev.h>
 #include <stdint.h>
 #include <errno.h>
+
 
 #define SAMPLES    10
 #define BUF_SIZE   4096
@@ -105,7 +105,8 @@ int main(int argc, char *argv[]) {
     float ax[SAMPLES], ay[SAMPLES], az[SAMPLES];
     int   r[SAMPLES], g[SAMPLES], b[SAMPLES];
     char buf[BUF_SIZE];
-
+    char mensaje[1024];
+    char token[] = "vLbODfxFkU0BHXvjLsap";
     while (1) {
         for (int i = 0; i < SAMPLES; i++) {
             sleep(1);
@@ -143,11 +144,13 @@ int main(int argc, char *argv[]) {
                    (struct sockaddr*)&srv, srv_len) < 0) {
             perror("sendto");
         }
+        snprintf(mensaje, sizeof(mensaje),"mosquitto_pub -d -q 1 -h %s -p 1883 -t v1/devices/me/telemetry -u \"%s\" ""-m \"{\\\"ax\\\": %.2f, \\\"ay\\\": %.2f, \\\"az\\\": %.2f, \\\"R\\\": %d, \\\"G\\\": %d, \\\"B\\\": %d}\"",srv_ip,token,ax[5],ay[5],az[5],r[5],g[5],b[5]);
+        system(mensaje);
     }
+
 
     close(fd_mpu);
     close(fd_tcs);
     close(sockfd);
     return 0;
 }
-
